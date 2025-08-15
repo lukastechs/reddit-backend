@@ -1,0 +1,17 @@
+{
+  "name": "reddit-age-checker-backend",
+  "version": "1.0.0",
+  "main": "reddit-backend.js",
+  "scripts": {
+    "start": "node reddit-backend.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "axios": "^1.7.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=16.6.0"
+  }
+}
