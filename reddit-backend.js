@@ -34,7 +34,8 @@ async function getRedditAccessToken() {
     const auth = Buffer.from(`${process.env.REDDIT_CLIENT_ID}:${process.env.REDDIT_CLIENT_SECRET}`).toString('base64');
     console.log('Attempting to fetch Reddit access token with:', {
       client_id: process.env.REDDIT_CLIENT_ID,
-      user_agent: process.env.REDDIT_USER_AGENT
+      user_agent: process.env.REDDIT_USER_AGENT,
+      auth_header: `Basic ${auth}` // Log the base64-encoded auth header (without revealing secret)
     });
     const response = await axios.post('https://www.reddit.com/api/v1/access_token', 
       'grant_type=client_credentials', 
@@ -56,7 +57,7 @@ async function getRedditAccessToken() {
       status: error.response?.status,
       data: error.response?.data,
       message: error.message,
-      headers: error.config?.headers // Log headers for debugging
+      headers: error.config?.headers // Log headers sent
     });
     throw new Error('Failed to generate Reddit access token');
   }
