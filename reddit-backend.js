@@ -32,6 +32,10 @@ function calculateAgeDays(createdAt) {
 async function getRedditAccessToken() {
   try {
     const auth = Buffer.from(`${process.env.REDDIT_CLIENT_ID}:${process.env.REDDIT_CLIENT_SECRET}`).toString('base64');
+    console.log('Attempting to fetch Reddit access token with:', {
+      client_id: process.env.REDDIT_CLIENT_ID,
+      user_agent: process.env.REDDIT_USER_AGENT
+    });
     const response = await axios.post('https://www.reddit.com/api/v1/access_token', 
       'grant_type=client_credentials', 
       {
@@ -45,13 +49,14 @@ async function getRedditAccessToken() {
     );
 
     const { access_token } = response.data;
-    console.log('Fetched new Reddit access token');
+    console.log('Fetched new Reddit access token:', access_token);
     return access_token;
   } catch (error) {
     console.error('Reddit Token Error:', {
       status: error.response?.status,
       data: error.response?.data,
-      message: error.message
+      message: error.message,
+      headers: error.config?.headers // Log headers for debugging
     });
     throw new Error('Failed to generate Reddit access token');
   }
