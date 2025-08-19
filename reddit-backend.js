@@ -7,6 +7,9 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+// trust proxy so rate limiter works correctly behind Render's load balancer
+app.set('trust proxy', 1);
+
 app.use(cors());
 app.use(express.json());
 
